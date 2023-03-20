@@ -26,7 +26,7 @@
     </div>
 
     <div class="sign-in-container">
-      <form>
+      <form action="/loginAuth" method="post">
         <h1>로그인</h1>
          <div class="social-links">
           <div>
@@ -44,7 +44,7 @@
 
     <div class="overlay-container">
       <div class="overlay-left">
-        <h1>Together Travel</h1>
+        <h1>Matching Service for Public Plaeces</h1>
         <p>당신의 여행을 계획적으로 ~~~</p>
         <button id="signIn" class="overlay_btn">Sign In</button>
       </div>
@@ -100,7 +100,7 @@
         	    }
         	    Kakao.Auth.logout(function(response) {
             		alert(response +' logout');
-        		    window.location.href='/'
+        		    window.location.href='/login'
         	    });
         };
 

@@ -159,6 +159,7 @@ public class DAO {
                 this.close();
 
             } catch (SQLException e) {
+                test=2;
                 System.out.println(e.getMessage());
             }
         } else {
