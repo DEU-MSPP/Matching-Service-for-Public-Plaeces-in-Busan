@@ -1,0 +1,122 @@
+<link rel="stylesheet" media="screen" href="/css/login.css"/>
+
+<title>Together Travel 로그인</title>
+
+<body>
+<div class="wrapper">
+  <div class="container">
+    <div class="sign-up-container">
+      <form action="/register" method="post">
+        <h1>회원가입</h1>
+          <div class="social-links">
+            <div>
+             <a href="javascript:kakaoLogin();"><img src="/img/kakao1.png"></a>
+             <a href="javascript:kakaoLogout();"><img src="/img/kakao1.png"></a>
+             <a href="javascript:secession();"><img src="/img/kakao1.png"></a>
+           </div>
+          </div>
+        <span>또는 이메일로 로그인</span>
+        <input type="email" id="u_id" name="u_id" placeholder="이메일">
+        <input type="password" id="u_pw" name="u_pw" placeholder="비밀번호">
+        <input type="text" id="u_name" name="u_name" placeholder="이름">
+        <input type="text" id="u_nick" name="u_nick" placeholder="닉네임">
+        <input type="tel" id="u_phone" name="u_phone" placeholder="전화번호">
+        <button class="form_btn" type="submit">회원가입</button>
+      </form>
+    </div>
+
+    <div class="sign-in-container">
+      <form>
+        <h1>로그인</h1>
+         <div class="social-links">
+          <div>
+            <a href="javascript:kakaoLogin();"><img src="/img/kakao1.png"></a>
+            <a href="javascript:kakaoLogout();"><img src="/img/kakao1.png"></a>
+            <a href="javascript:secession();"><img src="/img/kakao1.png"></a>
+          </div>
+         </div>
+        <span>또는 이메일로 로그인</span>
+       <input type="email" name="id" placeholder="이메일">
+        <input type="password" name="pw" placeholder="비밀번호">
+        <button class="form_btn">로그인</button>
+      </form>
+    </div>
+
+    <div class="overlay-container">
+      <div class="overlay-left">
+        <h1>Together Travel</h1>
+        <p>당신의 여행을 계획적으로 ~~~</p>
+        <button id="signIn" class="overlay_btn">Sign In</button>
+      </div>
+
+
+      <div class="overlay-right">
+        <h1>Together Travel</h1>
+        <p>시스템 간략한 설명이나 혹하는 말들..</p>
+        <button id="signUp" class="overlay_btn">Sign Up</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+
+<script src="/js/login.js"></script>
+
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+        window.Kakao.init('4752a62987e44f35d1fe417880dc4f4e');
+
+        function kakaoLogin() {
+            window.Kakao.Auth.login({
+                scope: 'profile_nickname, account_email', //동의항목 페이지에 있는 개인정보 보호 테이블의 활성화된 ID값을 넣습니다.
+                success: function(response) {
+                    console.log(response) // 로그인 성공하면 받아오는 데이터
+                    window.Kakao.API.request({ // 사용자 정보 가져오기
+                        url: '/v2/user/me',
+                        success: (res) => {
+                            const kakao_account = res.kakao_account;
+                            console.log(kakao_account)
+
+
+
+                        }
+                    });
+                    // window.location.href='/ex/kakao_login.html' //리다이렉트 되는 코드
+                },
+                fail: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+
+
+        window.Kakao.init('4752a62987e44f35d1fe417880dc4f4e');
+        	function kakaoLogout() {
+            	if (!Kakao.Auth.getAccessToken()) {
+        		    console.log('Not logged in.');
+        		    return;
+        	    }
+        	    Kakao.Auth.logout(function(response) {
+            		alert(response +' logout');
+        		    window.location.href='/'
+        	    });
+        };
+
+        function secession() {
+        	Kakao.API.request({
+            	url: '/v1/user/unlink',
+            	success: function(response) {
+            		console.log(response);
+            		//callback(); //연결끊기(탈퇴)성공시 서버에서 처리할 함수
+            		window.location.href='/'
+            	},
+            	fail: function(error) {
+            		console.log('탈퇴 미완료')
+            		console.log(error);
+            	},
+        	});
+        };
+
+    </script>
