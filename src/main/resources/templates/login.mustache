@@ -36,9 +36,9 @@
           </div>
          </div>
         <span>또는 이메일로 로그인</span>
-       <input type="email" name="id" placeholder="이메일">
-        <input type="password" name="pw" placeholder="비밀번호">
-        <button class="form_btn">로그인</button>
+          <input type="email" id="u_id" name="u_id" placeholder="이메일">
+          <input type="password" id="u_pw" name="u_pw" placeholder="비밀번호">
+        <button class="form_btn" type="submit">로그인</button>
       </form>
     </div>
 
@@ -58,11 +58,11 @@
     </div>
   </div>
 </div>
-
 </body>
 
 
 <script src="/js/login.js"></script>
+
 
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script>
@@ -76,10 +76,9 @@
                     window.Kakao.API.request({ // 사용자 정보 가져오기
                         url: '/v2/user/me',
                         success: (res) => {
-                            const kakao_account = res.kakao_account;
-                            console.log(kakao_account)
-
-
+                            var kakao_email = res.kakao_account.email;
+                            console.log(kakao_email)
+                            window.location.href='/kakaoRegister?id='+kakao_email
 
                         }
                     });
@@ -89,11 +88,12 @@
                     console.log(error);
                 }
             });
+
         }
 
 
         window.Kakao.init('4752a62987e44f35d1fe417880dc4f4e');
-        	function kakaoLogout() {
+        function kakaoLogout() {
             	if (!Kakao.Auth.getAccessToken()) {
         		    console.log('Not logged in.');
         		    return;

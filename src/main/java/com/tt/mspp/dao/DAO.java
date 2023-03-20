@@ -88,9 +88,9 @@ public class DAO {
 
         // 수행할 sql문장을 생성.
         String sql = "SELECT * FROM USER_DB";
-
         // 데이터베이스에 연결이 되었을때만 Select문 실행.
         if (connect()) {
+
             // 연결에 성공했을 때 작업
             try {
                 //Connection객체에 연결된(DB에 연결된) Statement 객체를 생성하여 Statement변수에 대입.
@@ -119,21 +119,21 @@ public class DAO {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+
             }
         } else {
             // 연결에 실패했을 때 작업
             System.out.println("데이터베이스 연결에 실패했습니다.");
             System.exit(0);
         }
-
         return list;
     }
 
 
     //account 테이블에 데이터를 삽입하는 메서드
-    public boolean InsertUser(UserDTO user) {
+    public int InsertUser(UserDTO user) {
         boolean result = false;
-
+        int test = 1;
         if (this.connect()) {
             try {
                 //값이 삽입되어야 하는 자리에는 물음표
@@ -161,13 +161,43 @@ public class DAO {
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
-
         } else {
             System.out.println("데이터베이스 연결에 실패");
             System.exit(0);
         }
+        return test;
+    }
 
+    //로그인 ID, PW를 비교하는 메서드
+    public boolean CheckLogin(UserDTO user) {
+        boolean result = false;
+        if (this.connect()) {
+            try {
+                //값이 삽입되어야 하는 자리에는 물음표
+                String sql = "SELECT U_ID FROM USER_DB WHERE U_ID=? and U_PW=?"; //모든 컬럼에 값을 넣으므로 컬럼명 생략.
+                PreparedStatement pstmt = con.prepareStatement(sql);
+
+                //VALUES의 ?에 값을 바인딩. (바인딩 : ?에 들어갔어야 하는 원래 데이터 값을 입력.
+                //바인딩 방법. set자료형(컬럼, 들어갈 데이터);
+                pstmt.setString(1, user.getU_id());
+                pstmt.setString(2, user.getU_pw());
+
+                rs = pstmt.executeQuery();
+                while(rs.next()){ result = true; }
+                //데이터베이스 생성 객체 해제
+                rs.close();
+                pstmt.close();
+                this.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("데이터베이스 연결에 실패");
+            System.exit(0);
+        }
         return result;
     }
+
+
 }
 

@@ -13,36 +13,7 @@ import java.util.List;
 
 @Controller // 컨트롤러 선언
 public class FirstController {
-    @GetMapping("/hi")  // hi라는 url을 만나면 greetings를 찾아서 반환
-    public String niceToMeetYou(Model model) {
-        model.addAttribute("username","정현수");
-        return "greetings";  //templates/greetings.mustache -> 찾아서 브라우저로 전송
-    }
 
-    @GetMapping("/bye")  // hi라는 url을 만나면 greetings를 찾아서 반환
-    public String goodBye(Model model) {
-
-        //DB 연결
-        DAO dao = DAO.getInstance();
-        List<UserDTO> userlist = dao.getUserList();
-
-
-        model.addAttribute("username",userlist.get(0).getU_name());
-        return "goodbye";  //templates/greetings.mustache -> 찾아서 브라우저로 전송
-    }
-
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
-
-    @PostMapping("/register")
-    @ResponseBody
-    public String register(@ModelAttribute UserDTO userdto) {
-        DAO dao = DAO.getInstance();
-        dao.InsertUser(userdto);
-        return "success";
-    }
 
     /* DB 사용법
        1. post맵핑, reponse 바디 쓰기
