@@ -78,8 +78,7 @@
                         success: (res) => {
                             var kakao_email = res.kakao_account.email;
                             console.log(kakao_email)
-                            window.location.href='/kakaoRegister?id='+kakao_email
-
+                            location.href='/kakaoLogin?id='+kakao_email
                         }
                     });
                     // window.location.href='/ex/kakao_login.html' //리다이렉트 되는 코드

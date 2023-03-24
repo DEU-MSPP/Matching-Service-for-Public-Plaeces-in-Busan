@@ -14,12 +14,12 @@ public class UserDTO {
     private String u_path;
 
     public UserDTO() {
-        super();
+        //super();
     }
 
 
     public UserDTO(String u_id, String u_pw, String u_name, String u_nick, String u_phone, String u_path) {
-        super();
+        //super();
         this.u_id = u_id;
         this.u_pw = u_pw;
         this.u_name = u_name;

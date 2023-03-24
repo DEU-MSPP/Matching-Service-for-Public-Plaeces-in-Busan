@@ -36,16 +36,26 @@ public class loginController {
         return "main";
     }
 
-    @GetMapping("/kakaoRegister")
-    public String kakaoRegister(HttpServletRequest request, HttpServletResponse res) throws ServletException, IOException {
+    @GetMapping("/kakaoLogin")
+    public String KakaoRegister(HttpServletRequest request, HttpServletResponse res,HttpSession session) throws ServletException, IOException {
         String id = request.getParameter("id");
-        System.out.print(id);
-        //userdto id값 넣고
-        //다오에서 메서드 만들어서
-        //1번째 기존 ID, 로그인 유형 카톡으로 있나 비교해서 있으면 로그인 / 그리고 세션등록
-        //2번재 없으면 id 넣고, 로그인 유형 카톡으로 해서 회원가입 끝
-        
-        return "kakaoRegister";
+        System.out.println(id);
+        DAO dao = DAO.getInstance();
+        UserDTO userdto = new UserDTO();
+        userdto.setU_id(id);
+        userdto.setU_path("K");
+
+        System.out.println(userdto.getU_id());
+        System.out.println(userdto.getU_path());
+
+        int num = dao.KakaoLogin(userdto);
+        if (num == 0) {           //0번재 없으면 id 넣고, 로그인 유형 카톡으로 해서 회원가입 끝
+            dao.KakaoRegister(userdto);
+            session.setAttribute("sessionid", userdto.getU_id());
+        } else if (num == 1) {       //1번째 기존 정보 있어서 바로 로그인 및 세션 유지
+            session.setAttribute("sessionid", userdto.getU_id());
+        }
+        return "main";
     }
 
     //로그인 버튼

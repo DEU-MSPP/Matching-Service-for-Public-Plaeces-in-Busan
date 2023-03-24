@@ -199,6 +199,58 @@ public class DAO {
         return result;
     }
 
+    //num 1 로그인 성공/ 0 계정정보 없음 회원가입 진행
+    public int KakaoLogin(UserDTO user) {
+        int num = 0;
+        if (this.connect()) {
+            try {
+                //값이 삽입되어야 하는 자리에는 물음표
+                String sql = "SELECT U_ID FROM USER_DB WHERE U_ID=? and U_PATH=?";
+                PreparedStatement pstmt = con.prepareStatement(sql);
+                pstmt.setString(1, user.getU_id());
+                pstmt.setString(2, user.getU_path());
+                rs = pstmt.executeQuery();
+                while(rs.next()){
+                    num = 1;
+                }
+                rs.close();
+                pstmt.close();
+                this.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("데이터베이스 연결에 실패");
+            System.exit(0);
+        }
+        return num;
+    }
+
+    //카카오 회원가입
+    public boolean KakaoRegister(UserDTO user) {
+        boolean result = false;
+        if (this.connect()) {
+            try {
+                String sql = "INSERT INTO USER_DB(U_ID, U_PATH) VALUES (?,?)";
+                PreparedStatement pstmt = con.prepareStatement(sql);
+                pstmt.setString(1, user.getU_id());
+                pstmt.setString(2, user.getU_path());
+                int r = pstmt.executeUpdate();
+                if (r > 0) {
+                    result = true;
+                }
+                pstmt.close();
+                this.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("데이터베이스 연결에 실패");
+            System.exit(0);
+        }
+        return result;
+    }
+
 
 }
 
