@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DAO {
-    // 2022. 11. 05 [최초작성자 정현수]
+    // 2023. 03. 15 [최초작성자 정현수]
     // DB 데이터 연동 클래스
 
     // DB 연동 방법.
