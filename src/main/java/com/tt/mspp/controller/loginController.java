@@ -4,7 +4,6 @@
 */
 package com.tt.mspp.controller;
 
-import ch.qos.logback.core.model.Model;
 import com.tt.mspp.dao.DAO;
 import com.tt.mspp.dto.UserDTO;
 
@@ -60,7 +59,6 @@ public class loginController {
 
     //로그인 버튼
     @PostMapping("/loginAuth")
-    @ResponseBody
     public String loginAuth(@ModelAttribute UserDTO userdto, HttpSession session) {
         DAO dao = DAO.getInstance();
         boolean check;
@@ -68,22 +66,21 @@ public class loginController {
         if (check) {//check가 ture면 로그인 성공
             session.setAttribute("sessionid", userdto.getU_id());
             System.out.print((String) session.getAttribute("sessionid"));
-            return "main";
+            return "index";
         } else                    //check가 false면 로그인 실패
-            return "<script>alert('아이디와 비밀번호를 확인해주세요');</script>";
+            return "/login/loginFail";
     }
 
     //회원가입 버튼
     @PostMapping("/register")
-    @ResponseBody
     public String register(@ModelAttribute UserDTO userdto) {
         DAO dao = DAO.getInstance();
         int check;
         check = dao.InsertUser(userdto);
         if(check==1)               //check가 ture면 회원가입 성공
-            return "회원가입 성공";
+            return "/login/registerSuccess";
         else                       //check가 false면 회원가입 실패
-            return "<script>alert('이미 존재하는 아이디입니다.');</script>";
+            return "/login/registerFail";
     }
 
 
