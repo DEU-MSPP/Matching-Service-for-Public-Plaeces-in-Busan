@@ -30,10 +30,6 @@ public class loginController {
         return "login";
     }
 
-    @GetMapping("/main")
-    public String main() {
-        return "main";
-    }
 
     @GetMapping("/kakaoLogin")
     public String KakaoRegister(HttpServletRequest request, HttpServletResponse res,HttpSession session) throws ServletException, IOException {
@@ -54,7 +50,7 @@ public class loginController {
         } else if (num == 1) {       //1번째 기존 정보 있어서 바로 로그인 및 세션 유지
             session.setAttribute("sessionid", userdto.getU_id());
         }
-        return "main";
+        return "index";
     }
 
     //로그인 버튼
