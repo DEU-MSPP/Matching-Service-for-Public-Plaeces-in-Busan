@@ -1,6 +1,7 @@
 package com.tt.mspp.dao;
 
 import com.tt.mspp.dto.UserDTO;
+import com.tt.mspp.dto.PlaceDTO;
 
 import java.sql.*;
 import java.util.ArrayList;
