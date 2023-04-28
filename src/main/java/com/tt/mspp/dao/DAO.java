@@ -252,6 +252,37 @@ public class DAO {
         return result;
     }
 
+    //장소 검색
+    public List<PlaceDTO> getPlaceList() {
+        List<PlaceDTO> list = null;
 
+        String sql = "SELECT * FROM PLACE_DB";
+        if (connect()) {
+            try {
+                stmt = con.createStatement();
+                if (stmt != null) {
+                    rs = stmt.executeQuery(sql);
+                    list = new ArrayList<PlaceDTO>();
+                    while (rs.next()) {
+                        PlaceDTO place = new PlaceDTO();
+
+                        place.setP_index(rs.getString("p_index"));
+                        place.setP_address(rs.getString("p_address"));
+                        place.setP_name(rs.getString("p_name"));
+                        place.setP_reserve(rs.getString("p_reserve"));
+                        place.setP_type(rs.getInt("p_type"));
+                        place.setP_phone(rs.getString("p_phone"));
+                        list.add(place);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("데이터베이스 연결에 실패했습니다.");
+            System.exit(0);
+        }
+        return list;
+    }
 }
 
