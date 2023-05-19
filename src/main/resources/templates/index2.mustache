@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>메인페이지</title>
-    <script type="text/javascript" src="kakaomap.js"></script>
+    <title>연습</title>
 </head>
 
 <body>
@@ -42,11 +41,12 @@
 
                     var markerTitles = [{{#markerTitles}}"{{.}}"{{^last}},{{/last}}{{/markerTitles}}];
                     var markerAddresses = [{{#markerAddresses}}"{{.}}"{{^last}},{{/last}}{{/markerAddresses}}];
-                    var category = [{{#markerType}}"{{.}}"{{^last}},{{/last}}{{/markerType}}];
+
 
                     for (var i = 0; i < markerTitles.length; i++) {
                         addMarker(map, markerTitles[i], markerAddresses[i]);
                     }
+
                     function geocodeToLatLng(address, callback) {
                         var geocoder = new kakao.maps.services.Geocoder();
                         geocoder.addressSearch(address, function(result, status) {
@@ -78,7 +78,6 @@
                             }
                         });
                     }
-
                 </script>
 
             </div>
