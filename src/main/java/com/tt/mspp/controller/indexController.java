@@ -1,15 +1,13 @@
 package com.tt.mspp.controller;
 
 import com.tt.mspp.dao.DAO;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import com.tt.mspp.dto.PlaceDTO;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.http.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -19,34 +17,30 @@ public class indexController {
     public String index(Model model) {
         DAO dao = DAO.getInstance();
         List<PlaceDTO> placelist = dao.getPlaceList();
-        String index = "";
-        String address = "";
-        String name = "";
-        String reserve = "";
-        int type = 0;
-        String phone = "";
-
-        String[] markerTitles = new String[placelist.size()];
-        String[] markerAddresses = new String[placelist.size()];
-        int[] markerType = new int[placelist.size()];
-        for (int i = 0; i < placelist.size(); i++) {
-            markerTitles[i] = placelist.get(i).getP_name();
-            markerAddresses[i] = placelist.get(i).getP_address();
-            markerType[i] = placelist.get(i).getP_type();
-            //index = placelist.get(i).getP_index();
-            //address = placelist.get(i).getP_address();
-            //name = placelist.get(i).getP_name();
-            //reserve = placelist.get(i).getP_reserve();
-            //type = placelist.get(i).getP_type();
-            //phone = placelist.get(i).getP_phone();
-        }
-        model.addAttribute("markerTitles", markerTitles);
-        model.addAttribute("markerAddresses", markerAddresses);
-        model.addAttribute("markerType", markerType);
-
+        model.addAttribute("placelist", placelist); //지도에 표시할 마커
         return "index";
     }
 
+    //마커 클릭시 상세정보 출력
+    @GetMapping("/index2")
+    public String index_2(@RequestParam("index") String index, Model model) {
+        DAO dao = DAO.getInstance();
+        List<PlaceDTO> placelist = dao.getPlaceList();
+        model.addAttribute("placelist", placelist); //지도에 표시할 마커
+
+        List<PlaceDTO> placelist2 = dao.getPlaceList(index); //select index로 한줄만
+        model.addAttribute("placelist2", placelist2); //상세 정보 출력
+        return "index";
+    }
+
+    //카테고리 선택시 지도에 해당 타입만 출력
+    @GetMapping("/index3")
+    public String index_3(@RequestParam("type") String type,Model model) {
+        DAO dao = DAO.getInstance();
+        List<PlaceDTO> placelist = dao.getPlaceListType(type);
+        model.addAttribute("placelist", placelist); //지도에 표시할 마커
+        return "index";
+    }
 }
 
 
