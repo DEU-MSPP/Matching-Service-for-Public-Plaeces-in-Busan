@@ -3,6 +3,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PlaceDTO {
     @Getter@Setter
     private String p_index;

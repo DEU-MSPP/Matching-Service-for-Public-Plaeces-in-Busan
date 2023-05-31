@@ -74,11 +74,19 @@
                                 });
                                 marker.setMap(map);
                                 var infowindow = new kakao.maps.InfoWindow({
-                                    content: '<div style="">'+title+'</div>'
+                                    content: '<div style="text-align: center;">'+title+'</div>'
                                 });
                                 infowindow.open(map, marker);
                                 kakao.maps.event.addListener(marker, 'click', function () {
-                                    location.href = "index2?index=" + index;
+                                    var currentURL = window.location.href;
+                                    var queryParams = currentURL.includes("?") ? currentURL.split("?")[1] : null;
+                                    var typeParam = queryParams && queryParams.includes("type=") ? queryParams.split("type=")[1].split("&")[0] : null;
+                                    var newURL = "?index=" + index;
+
+                                    if (typeParam) {
+                                        newURL += "&type=" + typeParam;
+                                    }
+                                    location.href = newURL;
                                 });
                             }
                             var centerPosition = new kakao.maps.LatLng(x, y);
@@ -86,8 +94,6 @@
 
                         });
                     }
-
-
 
                 </script>
                 {{>layouts/side_menu}}
