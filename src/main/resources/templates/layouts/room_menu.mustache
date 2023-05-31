@@ -1,0 +1,58 @@
+</div>
+</div>
+<!-- Side widgets-->
+<div class="col-lg-4">
+    <!-- Search widget-->
+    <div class="card mb-4">
+        <div class="card-header">검색</div>
+        <div class="card-body">
+                <div class="input-group">
+                    <input type="text" id="place_search" class="form-control" placeholder="검색어 입력"/>
+                    <button class="btn btn-primary" type="button" onclick="placeSearch();">조회</button>
+                    <button class="btn btn-primary" type="button" style="background-color: grey; border-color: grey;" onclick="reset();">초기화</button>
+                </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header" href="room">방 생성</div>
+        <div class="card-body">
+            <div class="input-group" style="display: flex; justify-content: center; align-items: center;">
+                <form action="room.do" method="POST">
+                    <table>
+                        <tr>
+                            <td>날짜:</td>
+                            <td><input type="date" id="day" name="day" class="form-control" required/></td>
+                        </tr>
+                        <tr>
+                            <td>시작 시간:</td>
+                            <td><input type="time" id="stime" name="stime" class="form-control" required/></td>
+                        </tr>
+                        <tr>
+                            <td>종료 시간:</td>
+                            <td><input type="time" id="etime" name="etime" class="form-control" required/></td>
+                        </tr>
+                        <tr>
+                            <td>장소:</td>
+                            <td><input type="text" id="place" name="place" class="form-control" placeholder="지도 장소 선택" readonly required/></td>
+                            <input type="hidden" id="p_index" name="p_index"/>
+                        </tr>
+                        <tr>
+                            <td>모집인원:</td>
+                            <td><input type="number" id="max" name="max" class="form-control" placeholder="숫자만 입력" required/></td>
+                        </tr>
+                        <tr>
+                            <td>설명:</td>
+                            <td><input type="textarea" id="discribe" name="discribe" class="form-control" placeholder="설명 입력" required/></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input type="submit" class="btn btn-primary" style="float: right" value="생성" required/></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
