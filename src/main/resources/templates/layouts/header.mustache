@@ -1,6 +1,5 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <link href="css/styles.css" rel="stylesheet" />
-
 <!-- Responsive navbar-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
@@ -21,3 +20,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
+
+<script>
+    app.get('/main', function(req, res) {
+        var sessionid = req.session.id; // 세션 ID 값을 가져옴
+        res.render('main', { sessionid: sessionid }); // 템플릿 데이터에 세션 ID 추가하여 렌더링
+    });
+</script>

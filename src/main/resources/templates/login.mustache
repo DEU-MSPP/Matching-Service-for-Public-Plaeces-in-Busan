@@ -1,123 +1,93 @@
-<link rel="stylesheet" media="screen" href="/css/login.css"/>
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+    <link rel="stylesheet" media="screen" href="/css/sign.css"/>
+    <title>Together Travel 로그인</title>
 
-<title>Together Travel 로그인</title>
+</head>
 
-<body>
 {{>layouts/header}}
-<div class="wrapper">
-  <div class="container">
-    <div class="sign-up-container">
-      <form action="/register" method="post">
-        <h1>회원가입</h1>
-          <div class="social-links">
-            <div>
-             <a href="javascript:kakaoLogin();"><img src="/img/kakao1.png"></a>
-             <a href="javascript:kakaoLogout();"><img src="/img/kakao1.png"></a>
-             <a href="javascript:secession();"><img src="/img/kakao1.png"></a>
-           </div>
-          </div>
-        <span>또는 이메일로 로그인</span>
-        <input type="email" id="u_id" name="u_id" placeholder="이메일">
-        <input type="password" id="u_pw" name="u_pw" placeholder="비밀번호">
-        <input type="text" id="u_name" name="u_name" placeholder="이름">
-        <input type="text" id="u_nick" name="u_nick" placeholder="닉네임">
-        <input type="tel" id="u_phone" name="u_phone" placeholder="전화번호">
-        <button class="form_btn" type="submit">회원가입</button>
-      </form>
-    </div>
+<body class="text-center">
+<main class="form-signin">
+    <form action="/loginAuth" method="post">
+        <h1 class="h3 mb-3 fw-normal">로그인</h1>
+        <div class="form-floating">
+            <input type="email" class="form-control" id="u_id" name="u_id" placeholder="이메일" required>
+            <label for="floatingInput">이메일</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="u_pw" name="u_pw" placeholder="비밀번호" required>
+            <label for="floatingPassword">비밀번호</label>
+        </div>
+        <a href="javascript:kakaoLogin();"><img style="width:330px;" src="/img/kakao1.png"></a> <p></p>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button> <p></p>
+        <button class="w-100 btn btn-lg btn-primary" type="button" style="background-color: grey; border: grey;" onclick="window.location.href='register'">회원가입</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2022-2023</p>
 
-    <div class="sign-in-container">
-      <form action="/loginAuth" method="post">
-        <h1>로그인</h1>
-         <div class="social-links">
-          <div>
-            <a href="javascript:kakaoLogin();"><img src="/img/kakao1.png"></a>
-            <a href="javascript:kakaoLogout();"><img src="/img/kakao1.png"></a>
-            <a href="javascript:secession();"><img src="/img/kakao1.png"></a>
-          </div>
-         </div>
-        <span>또는 이메일로 로그인</span>
-          <input type="email" id="u_id" name="u_id" placeholder="이메일">
-          <input type="password" id="u_pw" name="u_pw" placeholder="비밀번호">
-        <button class="form_btn" type="submit">로그인</button>
-      </form>
-    </div>
-
-    <div class="overlay-container">
-      <div class="overlay-left">
-        <h1>Matching Service for Public Plaeces</h1>
-        <p>~~~</p>
-        <button id="signIn" class="overlay_btn">Sign In</button>
-      </div>
-
-
-      <div class="overlay-right">
-        <h1>Together Travel</h1>
-        <p>시스템 간략한 설명이나 혹하는 말들..</p>
-        <button id="signUp" class="overlay_btn">Sign Up</button>
-      </div>
-    </div>
-  </div>
-</div>
-{{>layouts/footer}}
+    </form>
+</main>
 </body>
-
-
-<script src="/js/login.js"></script>
-
+{{>layouts/footer}}
+</html>
 
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-    <script>
-        window.Kakao.init('4752a62987e44f35d1fe417880dc4f4e');
+<script>
+    window.Kakao.init('4752a62987e44f35d1fe417880dc4f4e');
 
-        function kakaoLogin() {
-            window.Kakao.Auth.login({
-                scope: 'profile_nickname, account_email', //동의항목 페이지에 있는 개인정보 보호 테이블의 활성화된 ID값을 넣습니다.
-                success: function(response) {
-                    console.log(response) // 로그인 성공하면 받아오는 데이터
-                    window.Kakao.API.request({ // 사용자 정보 가져오기
-                        url: '/v2/user/me',
-                        success: (res) => {
-                            var kakao_email = res.kakao_account.email;
-                            console.log(kakao_email)
-                            location.href='/kakaoLogin?id='+kakao_email
-                        }
-                    });
-                    // window.location.href='/ex/kakao_login.html' //리다이렉트 되는 코드
-                },
-                fail: function(error) {
-                    console.log(error);
-                }
-            });
+    function kakaoLogin() {
+        window.Kakao.Auth.login({
+            scope: 'profile_nickname, account_email', //동의항목 페이지에 있는 개인정보 보호 테이블의 활성화된 ID값을 넣습니다.
+            success: function(response) {
+                console.log(response) // 로그인 성공하면 받아오는 데이터
+                window.Kakao.API.request({ // 사용자 정보 가져오기
+                    url: '/v2/user/me',
+                    success: (res) => {
+                        var kakao_email = res.kakao_account.email;
+                        console.log(kakao_email)
+                        location.href='/kakaoLogin?id='+kakao_email
+                    }
+                });
+                // window.location.href='/ex/kakao_login.html' //리다이렉트 되는 코드
+            },
+            fail: function(error) {
+                console.log(error);
+            }
+        });
 
+    }
+
+
+    window.Kakao.init('4752a62987e44f35d1fe417880dc4f4e');
+    function kakaoLogout() {
+        if (!Kakao.Auth.getAccessToken()) {
+            console.log('Not logged in.');
+            return;
         }
+        Kakao.Auth.logout(function(response) {
+            alert(response +' logout');
+            window.location.href='/login'
+        });
+    };
 
+    function secession() {
+        Kakao.API.request({
+            url: '/v1/user/unlink',
+            success: function(response) {
+                console.log(response);
+                //callback(); //연결끊기(탈퇴)성공시 서버에서 처리할 함수
+                window.location.href='/'
+            },
+            fail: function(error) {
+                console.log('탈퇴 미완료')
+                console.log(error);
+            },
+        });
+    };
 
-        window.Kakao.init('4752a62987e44f35d1fe417880dc4f4e');
-        function kakaoLogout() {
-            	if (!Kakao.Auth.getAccessToken()) {
-        		    console.log('Not logged in.');
-        		    return;
-        	    }
-        	    Kakao.Auth.logout(function(response) {
-            		alert(response +' logout');
-        		    window.location.href='/login'
-        	    });
-        };
-
-        function secession() {
-        	Kakao.API.request({
-            	url: '/v1/user/unlink',
-            	success: function(response) {
-            		console.log(response);
-            		//callback(); //연결끊기(탈퇴)성공시 서버에서 처리할 함수
-            		window.location.href='/'
-            	},
-            	fail: function(error) {
-            		console.log('탈퇴 미완료')
-            		console.log(error);
-            	},
-        	});
-        };
-
-    </script>
+</script>

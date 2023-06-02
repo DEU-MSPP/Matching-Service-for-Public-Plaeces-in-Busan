@@ -49,7 +49,7 @@ public class matchController {
 
         RoomDAO dao = RoomDAO.getInstance();
         boolean result = dao.insertRoom(id, day, stime, etime, place, max, discribe, Integer.parseInt(p_index));
-        if(result){
+        if (result) {
             model.addAttribute("alertMessage", "성공적으로 매칭방이 생성되었습니다.");
         }
         return "redirect:/match";

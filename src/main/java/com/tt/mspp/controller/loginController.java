@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.annotation.RequestScope;
 
@@ -24,6 +25,7 @@ import java.io.IOException;
 @RequestScope
 @Controller
 public class loginController {
+
 
     @GetMapping("/login")
     public String login() {
