@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+    <link rel="stylesheet" media="screen" href="/css/sign.css"/>
+    <title>Together Travel 로그인</title>
+
+</head>
+
+{{>layouts/header}}
+<body class="text-center">
+<main class="form-signin">
+    <form action="/register.do" method="post">
+        <h1 class="h3 mb-3 fw-normal">회원가입</h1>
+        <div class="form-floating">
+            <input type="email" class="form-control" id="u_id" name="u_id" placeholder="이메일" required>
+            <label for="floatingInput">이메일</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="u_pw" name="u_pw" placeholder="비밀번호" required>
+            <label for="floatingInput">비밀번호</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="text" class="form-control" id="u_name" name="u_name" placeholder="이름" required>
+            <label for="floatingInput">이름</label>
+        </div>
+        <div class="form-floating">
+            <input type="text" class="form-control" id="u_nick" name="u_nick" placeholder="닉네임" required>
+            <label for="floatingInput">닉네임</label>
+        </div>
+        <div class="form-floating">
+            <input type="tel" class="form-control" id="u_phone" name="u_phone" placeholder="전화번호" required>
+            <label for="floatingPassword">전화번호</label>
+        </div>
+        <a href="javascript:kakaoLogin();"><img style="width:330px;" src="/img/kakao2.png"></a> <p></p>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">회원가입</button> <p></p>
+    </form>
+</main>
+</body>
+{{>layouts/footer}}
+</html>
+
+
+

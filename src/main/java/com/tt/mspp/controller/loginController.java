@@ -32,6 +32,11 @@ public class loginController {
         return "login";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("sessionid");
+        return "index";
+    }
 
     @GetMapping("/kakaoLogin")
     public String KakaoRegister(HttpServletRequest request, HttpServletResponse res,HttpSession session) throws ServletException, IOException {
@@ -70,8 +75,13 @@ public class loginController {
     }
 
     //회원가입 버튼
-    @PostMapping("/register")
-    public String register(@ModelAttribute UserDTO userdto) {
+    @GetMapping("/register")
+    public String register() {
+        return "register";
+    }
+
+    @PostMapping("/register.do")
+    public String registerDo(@ModelAttribute UserDTO userdto) {
         DAO dao = DAO.getInstance();
         int check;
         check = dao.InsertUser(userdto);

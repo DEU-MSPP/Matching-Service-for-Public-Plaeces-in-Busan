@@ -10,7 +10,7 @@ public class MatchDTO {
     private String m_index;
     private String m_r_index;
     private String m_id;
-
+    private int count=0;
 }
 
 

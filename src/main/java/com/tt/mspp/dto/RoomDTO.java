@@ -8,15 +8,15 @@ import lombok.*;
 @AllArgsConstructor
 public class RoomDTO {
 
-    public String r_index;
-    public String r_id;
-    public String r_day;
-    public String r_stime;
-    public String r_etime;
-    public String r_place;
-    public int r_max;
-    public String r_discribe;
-    public String r_ok;
-    public int r_p_index;
-
+    private String r_index;
+    private String r_id;
+    private String r_day;
+    private String r_stime;
+    private String r_etime;
+    private String r_place;
+    private int r_max;
+    private String r_discribe;
+    private String r_ok;
+    private int r_p_index;
+    private int count=0;
 }

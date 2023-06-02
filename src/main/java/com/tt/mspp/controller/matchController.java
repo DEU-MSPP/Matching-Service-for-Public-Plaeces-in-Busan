@@ -4,7 +4,7 @@ import com.tt.mspp.dao.DAO;
 import com.tt.mspp.dao.MatchDAO;
 import com.tt.mspp.dao.RoomDAO;
 import com.tt.mspp.dto.RoomDTO;
-import jakarta.servlet.http.HttpServletRequest;
+import com.tt.mspp.dto.MatchDTO;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +13,6 @@ import com.tt.mspp.dto.PlaceDTO;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -24,12 +22,43 @@ public class matchController {
     public String match(Model model) {
         RoomDAO dao = RoomDAO.getInstance();
         List<RoomDTO> roomList = dao.getRoomList();
-        model.addAttribute("roomList", roomList);
+
 
         DAO dao1 = DAO.getInstance();
         List<PlaceDTO> placelist = dao1.getPlaceListType("1");
+
+
+        MatchDAO dao2 = MatchDAO.getInstance();
+        List<MatchDTO> matchList = dao2.getMatchList();
+
+        for (RoomDTO room : roomList) {
+            String r_index = room.getR_index();
+            if (r_index != null) {
+                for (MatchDTO match : matchList) {
+                    String m_r_index = match.getM_r_index();
+                    if (m_r_index != null && m_r_index.equals(r_index)) {
+                        room.setCount(match.getCount());
+                        break;
+                    }
+                }
+            }
+        }
         model.addAttribute("roomList", roomList);
+        model.addAttribute("placelist", placelist);
         return "match";
+    }
+
+    @PostMapping("/match.do")
+    public String insertMatch(HttpSession session, @RequestParam("r_index") String r_index, Model model) {
+
+        String id = (String) session.getAttribute("sessionid");
+
+        MatchDAO dao = MatchDAO.getInstance();
+        boolean result = dao.insertMatch(r_index, id);
+        if (result) {
+            model.addAttribute("alertMessage", "성공적으로 매칭에 참여되셨습니다.");
+        }
+        return "redirect:/match";
     }
 
     @GetMapping("/room")

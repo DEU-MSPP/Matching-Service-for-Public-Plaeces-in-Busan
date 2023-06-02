@@ -27,11 +27,17 @@
                     <td>{{r_place}}</td>
                     <td>{{r_day}}</td>
                     <td>{{r_stime}} ~ {{r_etime}}</td>
-                    <td>{{r_max}}</td>
+                    <td>{{count}}/{{r_max}}</td>
+
                     <td>
                         <button class="tooltip-btn" data-tooltip="{{r_discribe}}">상세</button>
                     </td>
-                    <td><input class="tooltip-btn" type="submit" value="신청"></td>
+                    <td>
+                        <form action="match.do" method="post">
+                            <input type="hidden" id="r_index" name="r_index" value="{{r_index}}">
+                            <input class="tooltip-btn" type="submit" value="신청" onclick="confirmApplication()">
+                        </form>
+                    </td>
                 </tr>
             {{/roomList}}
             </tbody>
@@ -81,5 +87,13 @@
 
     displayRows();
     generatePagination();
+
+    function confirmApplication() {
+        if (confirm("정말 신청하시겠습니까?")) {
+            document.getElementById("application-form").submit();
+        }
+    }
+
+
 </script>
 
