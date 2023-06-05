@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>메인페이지</title>
+    <script type="text/javascript" src="kakaomap.js"></script>
+</head>
+
+<body>
+{{>layouts/header}}
+
+<!-- Page header with logo and tagline-->
+<header class="py-5 bg-light border-bottom mb-4">
+    <div class="container">
+        <div class="text-center my-5">
+            <h1 class="fw-bolder">Welcome to Blog Home!</h1>
+            <p class="lead mb-0">A Bootstrap 5 starter layout for your next blog homepage</p>
+        </div>
+    </div>
+</header>
+
+
+<!-- Page content-->
+<div class="container">
+    <div class="row">
+        <!-- Featured blog post-->
+        <div class="card mb-4">
+            <div class="card-header" style="text-align: center;">
+                모집 매칭 목록
+            </div>
+            <div class="card-body">
+                <table id="matchTable" style="width: 100%; height: 100%; table-layout: fixed; text-align: center; ">
+                    <thead>
+                    <tr>
+                        <th style="width:5%;">번호</th>
+                        <th style="width:26%;">장소</th>
+                        <th style="width:14%;">날짜</th>
+                        <th style="width:14%;">시간</th>
+                        <th style="width:8%;">모집인원</th>
+                        <th style="width:11%;">설명</th>
+                        <th style="width:11%;">취소</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#myRoom}}
+                        <tr>
+                            <td>{{r_index}}</td>
+                            <td>{{r_place}}</td>
+                            <td>{{r_day}}</td>
+                            <td>{{r_stime}} ~ {{r_etime}}</td>
+                            <td>{{count}}/{{r_max}}</td>
+                            <td>
+                                <button class="tooltip-btn" data-tooltip="{{r_discribe}}">상세</button>
+                            </td>
+                            <td>
+                                <form action="roomCancel.do" method="post">
+                                    <input type="hidden" id="r_index" name="r_index" value="{{r_index}}">
+                                    <input class="tooltip-btn" type="submit" value="취소" onclick="confirmApplication()">
+                                </form>
+                            </td>
+                        </tr>
+                    {{/myRoom}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Side widget-->
+        <div class="card mb-4">
+            <div class="card-header" style="text-align: center;">
+                참여 매칭 목록
+            </div>
+            <div class="card-body">
+                <table id="matchTable" style="width: 100%; height: 100%; table-layout: fixed; text-align: center; ">
+                    <thead>
+                    <tr>
+                        <th style="width:5%;">번호</th>
+                        <th style="width:17%;">등록자</th>
+                        <th style="width:26%;">장소</th>
+                        <th style="width:14%;">날짜</th>
+                        <th style="width:14%;">시간</th>
+                        <th style="width:8%;">모집인원</th>
+                        <th style="width:8%;">설명</th>
+                        <th style="width:8%;">취소</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#myMatch}}
+                        <tr>
+                            <td>{{r_index}}</td>
+                            <td>{{r_id}}</td>
+                            <td>{{r_place}}</td>
+                            <td>{{r_day}}</td>
+                            <td>{{r_stime}} ~ {{r_etime}}</td>
+                            <td>{{count}}/{{r_max}}</td>
+
+                            <td>
+                                <button class="tooltip-btn" data-tooltip="{{r_discribe}}">상세</button>
+                            </td>
+                            <td>
+                                <form action="matchCancel.do" method="post">
+                                    <input type="hidden" id="r_index" name="r_index" value="{{r_index}}">
+                                    <input class="tooltip-btn" type="submit" value="취소" onclick="confirmApplication()">
+                                </form>
+                            </td>
+                        </tr>
+                    {{/myMatch}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{>layouts/footer}}
+
+<script>
+    function confirmApplication() {
+        if (confirm("정말 취소하시겠습니까?")) {
+            document.getElementById("application-form").submit();
+        }
+    }
+</script>
+</body>
+</html>
