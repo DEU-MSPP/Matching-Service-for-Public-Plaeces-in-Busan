@@ -87,5 +87,28 @@ public class FriendDAO {
         return list;
     }
 
+    public boolean addFriend(String f_id1, String f_id2){
+        boolean result = false;
+        if (this.connect()) {
+            try {
+                String sql = "INSERT INTO FRIEND_DB VALUES (5,?,?,0)"; //모든 컬럼에 값을 넣으므로 컬럼명 생략.
+                PreparedStatement pstmt = con.prepareStatement(sql);
+
+                pstmt.setString(1, f_id1);
+                pstmt.setString(2, f_id2);
+                pstmt.executeUpdate();
+
+                pstmt.close();
+                this.close();
+                result = true;
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("데이터베이스 연결에 실패");
+            System.exit(0);
+        }
+        return result;
+    }
 
 }
