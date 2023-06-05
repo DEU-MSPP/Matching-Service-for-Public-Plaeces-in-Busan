@@ -61,20 +61,24 @@
                     }
 
                     // 마커를 표시하는 함수
+                    var markers = [];
+                    var infowindows = [];
                     function addMarker(map, title, address, index) {
                         geocodeToLatLng(address, function (latitude, longitude) {
                             var x = 35.145;
                             var y = 129.0404;
+
                             if (latitude && longitude) {
                                 var markerPosition = new kakao.maps.LatLng(latitude, longitude);
-                                var marker = new kakao.maps.Marker({
+                                marker = new kakao.maps.Marker({
                                     position: markerPosition,
                                     title: title,
                                     index: index
                                 });
                                 marker.setMap(map);
+                                markers.push(marker); // 생성한 마커를 markers 배열에 추가
                                 var infowindow = new kakao.maps.InfoWindow({
-                                    content: '<div style="text-align: center;">'+title+'</div>'
+                                    content: '<div style="text-align: center;"><span style="display: inline-block;">'+title+'</span></div>'
                                 });
                                 infowindow.open(map, marker);
                                 kakao.maps.event.addListener(marker, 'click', function () {
@@ -88,11 +92,33 @@
                                     }
                                     location.href = newURL;
                                 });
+                                infowindows.push(infowindow);
                             }
                             var centerPosition = new kakao.maps.LatLng(x, y);
                             map.setCenter(centerPosition);
 
                         });
+                    }
+
+                    function placeSearch() {
+                        var input = document.getElementById('place_search_main').value;
+                        console.log(input);
+                        // 모든 마커 숨기기
+                        markers.forEach(function(marker) {
+                            marker.setMap(null);
+                        });
+
+                        infowindows.forEach(function(infowindow) {
+                            infowindow.close();
+                        });
+
+                        var str1;
+                        {{#placelist}}
+                            str1 = "{{p_name}}";
+                            if(str1.indexOf(input) != -1){
+                                addMarker(map, '{{p_name}}', '{{p_address}}', '{{p_index}}');
+                            }
+                        {{/placelist}}
                     }
 
                 </script>

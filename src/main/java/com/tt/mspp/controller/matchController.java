@@ -22,7 +22,7 @@ import java.util.List;
 public class matchController {
 
     @GetMapping("/match")
-    public String match(Model model) {
+    public String match(Model model, HttpSession session) {
         RoomDAO dao = RoomDAO.getInstance();
         List<RoomDTO> roomList = dao.getRoomList();
 
@@ -74,6 +74,7 @@ public class matchController {
 
         model.addAttribute("roomList", roomList);
         model.addAttribute("placelist", matchingPlaces);
+        model.addAttribute("friendRoomList", friendRoomList);
         return "match";
     }
 

@@ -3,7 +3,9 @@
 <div class="card mb-4">
     <div class="card-header">
         매칭 목록
-        <input type="button" class="btn btn-primary" style="float: right" value="방 생성"/>
+        <form action="/room">
+            <input type="submit" class="btn btn-primary" style="float: right" value="방 생성"/>
+        </form>
     </div>
     <div class="card-body">
         <table id="matchTable" style="width: 100%; height: 100%; table-layout: fixed; text-align: center; ">
@@ -93,7 +95,10 @@
 
 <script>
     var currentPage = 1;
-    var rowsPerPage = 10;
+    var rowsPerPage = 2;
+
+    var currentPage2 = 1;
+
     var table = document.getElementById("matchTable");
     var table2 = document.getElementById("friendMatchTable");
 
