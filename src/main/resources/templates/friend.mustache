@@ -13,31 +13,98 @@
 
 {{>layouts/header}}
 <body>
-
-
-<div>
-<table id="matchTable" style="width: 100%; height: 100%; table-layout: fixed; text-align: center; ">
-    <thead>
-    <tr>
-        <th style="width:5%;">친구목록</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    {{#friends}}
-        <tr>
-            <td><{{.}}></td>
-        </tr>
-    {{/friends}}
-    </tbody>
-</table>
+<br>
+<div style="text-align: center;">
+    <form action="addFriend.do" method="Post">
+        <input type="text" id="f_id1" name="f_id1" required>
+        <input type="submit" value="친구신청"/>
+    </form>
 </div>
+<br>
+<div class="container" style="width:30%;">
+    <div class="row">
 
+        <div class="card mb-4">
+            <div class="card-body">
+                <table id="matchTable" style="width: 100%; height: 100%; table-layout: fixed; text-align: center;">
+                    <thead>
+                    <tr>
+                        <th style="width:50%;">친구목록</th>
+                    </tr>
+                    </thead>
 
-<form action="addFriend.do" method="Post">
-    <input type="text" id="f_id1" name="f_id1" required>
-    <input type="submit" value="친구신청" />
-</form>
+                    <tbody>
+                    {{#friends}}
+                        <tr>
+                            <td><{{.}}></td>
+                        </tr>
+                    {{/friends}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <table id="matchTable" style="width: 100%; height: 100%; table-layout: fixed; text-align: center; ">
+                    <thead>
+                    <tr>
+                        <th colspan="3">신청받은 목록</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {{#friends3}}
+                        <tr>
+                            <td><{{.}}></td>
+                            <form>
+                                <input type="hidden" id="cancel2" name="cancel2" value="{{.}}">
+                                <td><input type="submit" class="tooltip-btn" value="수락" formaction="acceptFriend.do">
+                                </td>
+                                <td><input type="submit" class="tooltip-btn" value="거절" formaction="refuseFriend.do">
+                                </td>
+
+                            </form>
+                        </tr>
+                    {{/friends3}}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <br>
+
+        <div class="card mb-4">
+            <div class="card-body">
+
+                <table id="matchTable" style="width: 100%; height: 100%; table-layout: fixed; text-align: center; ">
+                    <thead>
+                    <tr>
+                        <th colspan="2">신청한 목록</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {{#friends2}}
+                        <tr>
+                            <td><{{.}}></td>
+                            <form>
+
+                                <input type="hidden" id="cancel1" name="cancel1" value="{{.}}">
+                                <td><input type="submit" class="tooltip-btn" value="신청 취소" formaction="cancelFriend.do">
+                                </td>
+                            </form>
+                        </tr>
+                    {{/friends2}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 {{>layouts/footer}}
 </html>

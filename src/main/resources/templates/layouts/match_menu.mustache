@@ -28,7 +28,6 @@
                     <td>{{r_day}}</td>
                     <td>{{r_stime}} ~ {{r_etime}}</td>
                     <td>{{count}}/{{r_max}}</td>
-
                     <td>
                         <button class="tooltip-btn" data-tooltip="{{r_discribe}}">상세</button>
                     </td>
@@ -45,36 +44,91 @@
         <div id="pagination" class="pagination"/>
     </div>
 </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        친구 매칭 목록
+    </div>
+    <div class="card-body">
+        <table id="friendMatchTable" style="width: 100%; height: 100%; table-layout: fixed; text-align: center; ">
+            <thead>
+            <tr>
+                <th style="width:5%;">번호</th>
+                <th style="width:17%;">등록자</th>
+                <th style="width:26%;">장소</th>
+                <th style="width:14%;">날짜</th>
+                <th style="width:14%;">시간</th>
+                <th style="width:8%;">모집인원</th>
+                <th style="width:8%;">설명</th>
+                <th style="width:8%;">신청</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#friendRoomList}}
+                <tr>
+                    <td>{{r_index}}</td>
+                    <td>{{r_id}}</td>
+                    <td>{{r_place}}</td>
+                    <td>{{r_day}}</td>
+                    <td>{{r_stime}} ~ {{r_etime}}</td>
+                    <td>{{count}}/{{r_max}}</td>
+                    <td>
+                        <button class="tooltip-btn" data-tooltip="{{r_discribe}}">상세</button>
+                    </td>
+                    <td>
+                        <form action="match.do" method="post">
+                            <input type="hidden" id="r_index" name="r_index" value="{{r_index}}">
+                            <input class="tooltip-btn" type="submit" value="신청" onclick="confirmApplication()">
+                        </form>
+                    </td>
+                </tr>
+            {{/friendRoomList}}
+            </tbody>
+        </table>
+        <div id="pagination2" class="pagination"/>
+    </div>
+</div>
+
 
 <script>
     var currentPage = 1;
     var rowsPerPage = 10;
     var table = document.getElementById("matchTable");
+    var table2 = document.getElementById("friendMatchTable");
+
     var rows = table.tBodies[0].rows;
     var totalPages = Math.ceil(rows.length / rowsPerPage);
+
+    var rows2 = table2.tBodies[0].rows;
+    var totalPages2 = Math.ceil(rows2.length / rowsPerPage);
 
     function displayRows() {
         var startIndex = (currentPage - 1) * rowsPerPage;
         var endIndex = startIndex + rowsPerPage;
-
         for (var i = 0; i < rows.length; i++) {
             rows[i].style.display = i >= startIndex && i < endIndex ? "table-row" : "none";
+        }
+    }
+
+    function displayRows2() {
+        var startIndex = (currentPage2 - 1) * rowsPerPage;
+        var endIndex = startIndex + rowsPerPage;
+        for (var i = 0; i < rows2.length; i++) {
+            rows2[i].style.display = i >= startIndex && i < endIndex ? "table-row" : "none";
         }
     }
 
     function generatePagination() {
         var pagination = document.getElementById("pagination");
         pagination.innerHTML = "";
-
         for (var i = 1; i <= totalPages; i++) {
             var pageLink = document.createElement("a");
             pageLink.textContent = i;
             pageLink.dataset.page = i; // 페이지 번호를 data 속성으로 추가
-
             if (i === currentPage) {
                 pageLink.classList.add("active");
             }
-
             pageLink.addEventListener("click", function (event) {
                 event.preventDefault(); // 기본 동작 중지
                 currentPage = parseInt(this.dataset.page);
@@ -85,15 +139,36 @@
         }
     }
 
+    function generatePagination2() {
+        var pagination = document.getElementById("pagination2");
+        pagination.innerHTML = "";
+        for (var i = 1; i <= totalPages2; i++) {
+            var pageLink = document.createElement("a");
+            pageLink.textContent = i;
+            pageLink.dataset.page = i; // 페이지 번호를 data 속성으로 추가
+            if (i === currentPage2) {
+                pageLink.classList.add("active");
+            }
+            pageLink.addEventListener("click", function (event) {
+                event.preventDefault(); // 기본 동작 중지
+                currentPage2 = parseInt(this.dataset.page);
+                displayRows2();
+                generatePagination2();
+            });
+            pagination.appendChild(pageLink);
+        }
+    }
+
+
     displayRows();
     generatePagination();
+
+    displayRows2();
+    generatePagination2();
 
     function confirmApplication() {
         if (confirm("정말 신청하시겠습니까?")) {
             document.getElementById("application-form").submit();
         }
     }
-
-
 </script>
-

@@ -1,8 +1,10 @@
 package com.tt.mspp.controller;
 
 import com.tt.mspp.dao.DAO;
+import com.tt.mspp.dao.FriendDAO;
 import com.tt.mspp.dao.MatchDAO;
 import com.tt.mspp.dao.RoomDAO;
+import com.tt.mspp.dto.FriendDTO;
 import com.tt.mspp.dto.RoomDTO;
 import com.tt.mspp.dto.MatchDTO;
 import jakarta.servlet.http.HttpSession;
@@ -28,9 +30,9 @@ public class matchController {
         DAO dao1 = DAO.getInstance();
         List<PlaceDTO> placelist = dao1.getPlaceListType("1");
         List<PlaceDTO> matchingPlaces = new ArrayList<>();
-        for(PlaceDTO place : placelist){
+        for (PlaceDTO place : placelist) {
             String p_index = place.getP_index();
-            for(RoomDTO room: roomList){
+            for (RoomDTO room : roomList) {
                 String r_p_index = Integer.toString(room.getR_p_index());
                 if (p_index.equals(r_p_index)) {
                     matchingPlaces.add(place);
@@ -55,6 +57,21 @@ public class matchController {
                 }
             }
         }
+
+        String sessionId = (String) session.getAttribute("sessionid");
+        FriendDAO dao3 = FriendDAO.getInstance();
+        List<FriendDTO> list = dao3.getFriendList(sessionId);
+        List<RoomDTO> friendRoomList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if ((list.get(i).getF_id1().equals(sessionId) && list.get(i).getF_ok().equals("1")) || (list.get(i).getF_id2().equals(sessionId) && list.get(i).getF_ok().equals("1"))) {        //id1이 로그인한 사용자라면 id2가 상대방
+                for (RoomDTO room : roomList) {
+                    if (room.getR_id().equals(list.get(i).getF_id1())) {
+                        friendRoomList.add(room);
+                    }
+                }
+            }
+        }
+
         model.addAttribute("roomList", roomList);
         model.addAttribute("placelist", matchingPlaces);
         return "match";
@@ -96,7 +113,7 @@ public class matchController {
 
         for (RoomDTO room : roomList) {
             String r_id = room.getR_id();
-            if (r_id != null && id!=null && id.equals(r_id)) {
+            if (r_id != null && id != null && id.equals(r_id)) {
                 myRoom.add(room);
             }
         }
@@ -108,11 +125,11 @@ public class matchController {
 
         for (MatchDTO match : matchList) {
             String m_id = match.getM_id();
-            if (m_id != null && id!=null && id.equals(m_id)) {
+            if (m_id != null && id != null && id.equals(m_id)) {
                 String m_r_index = match.getM_r_index();
-                for(RoomDTO room: roomList){
+                for (RoomDTO room : roomList) {
                     String r_index = room.getR_index();
-                    if(r_index!=null&&m_r_index.equals(r_index)){
+                    if (r_index != null && m_r_index.equals(r_index)) {
                         myMatch.add(room);
                     }
                 }
