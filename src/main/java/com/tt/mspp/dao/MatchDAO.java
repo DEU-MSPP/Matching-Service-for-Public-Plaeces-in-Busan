@@ -58,7 +58,7 @@ public class MatchDAO {
     public List<MatchDTO> getMatchList() {
         List<MatchDTO> list = null;
 
-        String sql = "SELECT m_r_index, COUNT(*) AS count FROM MATCH_DB GROUP BY m_r_index";;
+        String sql = "SELECT m_r_index, m_index, m_id, COUNT(*) AS count FROM MATCH_DB GROUP BY m_r_index, m_index, m_id";
         if (connect()) {
             try {
                 stmt = con.createStatement();
@@ -69,6 +69,9 @@ public class MatchDAO {
                         MatchDTO match = new MatchDTO();
 
                         match.setM_r_index(rs.getString("m_r_index"));
+
+                        match.setM_index(rs.getString("m_index"));
+                        match.setM_id(rs.getString("m_id"));
                         match.setCount(rs.getInt("count"));
                         list.add(match);
                     }
@@ -106,4 +109,30 @@ public class MatchDAO {
         return result;
     }
 
+    public boolean deleteMatch(String r_index, String id) {
+        boolean result = false;
+        if (this.connect()) {
+            try {
+                String sql = "DELETE FROM MATCH_DB WHERE M_R_INDEX = ? AND M_ID = ?";
+                PreparedStatement pstmt = con.prepareStatement(sql);
+                pstmt.setString(1, r_index);
+                pstmt.setString(2, id);
+                int r = pstmt.executeUpdate();
+                if (r > 0) {
+                    result = true;
+                }
+                //데이터베이스 생성 객체 해제
+                pstmt.close();
+                this.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+
+        } else {
+            System.out.println("데이터베이스 연결에 실패");
+            System.exit(0);
+        }
+
+        return result;
+    }
 }

@@ -8,9 +8,25 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link" href="/">메인화면</a></li>
-                <li class="nav-item"><a class="nav-link" href="/match">매칭</a></li>
-                <li class="nav-item"><a class="nav-link" href="/chat">커뮤니티</a></li>
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/login">로그인</a></li>
+                <li class="nav-item dropdown"> <!-- 드롭다운 메뉴를 만들기 위해 'dropdown' 클래스 추가 -->
+                    <a class="nav-link dropdown-toggle" href="#" id="matchingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        매칭
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="matchingDropdown"> <!-- 드롭다운 메뉴 아이템 추가 -->
+                        <li><a class="dropdown-item" href="/match">매칭 목록</a></li>
+                        <li><a class="dropdown-item" href="/matchManage">매칭 관리</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="/chat">채팅</a></li>
+                <li class="nav-item"><a class="nav-link" href="/friend">친구</a></li>
+                {{#isLogged}}
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="/mypage">마이페이지</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="/logout">로그아웃</a></li>
+                {{/isLogged}}
+                {{^isLogged}}
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="/login">로그인</a></li>
+                {{/isLogged}}
+
 
             </ul>
         </div>
@@ -22,9 +38,19 @@
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    app.get('/main', function(req, res) {
-        var sessionid = req.session.id; // 세션 ID 값을 가져옴
-        res.render('main', { sessionid: sessionid }); // 템플릿 데이터에 세션 ID 추가하여 렌더링
+    // 드롭다운 메뉴 자동 열림 기능 추가
+    $(document).ready(function () {
+        $('.dropdown').hover(
+                function () {
+                    $(this).addClass('show');
+                    $(this).find('.dropdown-menu').addClass('show');
+                },
+                function () {
+                    $(this).removeClass('show');
+                    $(this).find('.dropdown-menu').removeClass('show');
+                }
+        );
     });
 </script>

@@ -13,6 +13,7 @@ import com.tt.mspp.dto.PlaceDTO;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,6 +27,17 @@ public class matchController {
 
         DAO dao1 = DAO.getInstance();
         List<PlaceDTO> placelist = dao1.getPlaceListType("1");
+        List<PlaceDTO> matchingPlaces = new ArrayList<>();
+        for(PlaceDTO place : placelist){
+            String p_index = place.getP_index();
+            for(RoomDTO room: roomList){
+                String r_p_index = Integer.toString(room.getR_p_index());
+                if (p_index.equals(r_p_index)) {
+                    matchingPlaces.add(place);
+                    break;
+                }
+            }
+        }
 
 
         MatchDAO dao2 = MatchDAO.getInstance();
@@ -44,7 +56,7 @@ public class matchController {
             }
         }
         model.addAttribute("roomList", roomList);
-        model.addAttribute("placelist", placelist);
+        model.addAttribute("placelist", matchingPlaces);
         return "match";
     }
 
@@ -59,6 +71,57 @@ public class matchController {
             model.addAttribute("alertMessage", "성공적으로 매칭에 참여되셨습니다.");
         }
         return "redirect:/match";
+    }
+
+    @PostMapping("/matchCancel.do")
+    public String cancelMatch(HttpSession session, @RequestParam("r_index") String r_index, Model model) {
+
+        String id = (String) session.getAttribute("sessionid");
+
+        MatchDAO dao = MatchDAO.getInstance();
+        boolean result = dao.deleteMatch(r_index, id);
+        if (result) {
+            model.addAttribute("alertMessage", "성공적으로 매칭에 참여되셨습니다.");
+        }
+        return "redirect:/matchManage";
+    }
+
+    @GetMapping("/matchManage")
+    public String matchManage(Model model, HttpSession session) {
+        RoomDAO dao = RoomDAO.getInstance();
+        List<RoomDTO> roomList = dao.getRoomList();
+        List<RoomDTO> myRoom = new ArrayList<>();
+
+        String id = (String) session.getAttribute("sessionid");
+
+        for (RoomDTO room : roomList) {
+            String r_id = room.getR_id();
+            if (r_id != null && id!=null && id.equals(r_id)) {
+                myRoom.add(room);
+            }
+        }
+
+        MatchDAO dao2 = MatchDAO.getInstance();
+        List<MatchDTO> matchList = dao2.getMatchList();
+        List<RoomDTO> myMatch = new ArrayList<>();
+
+
+        for (MatchDTO match : matchList) {
+            String m_id = match.getM_id();
+            if (m_id != null && id!=null && id.equals(m_id)) {
+                String m_r_index = match.getM_r_index();
+                for(RoomDTO room: roomList){
+                    String r_index = room.getR_index();
+                    if(r_index!=null&&m_r_index.equals(r_index)){
+                        myMatch.add(room);
+                    }
+                }
+            }
+        }
+
+        model.addAttribute("myRoom", myRoom);
+        model.addAttribute("myMatch", myMatch);
+        return "matchManage";
     }
 
     @GetMapping("/room")
@@ -82,5 +145,16 @@ public class matchController {
             model.addAttribute("alertMessage", "성공적으로 매칭방이 생성되었습니다.");
         }
         return "redirect:/match";
+    }
+
+    @PostMapping("/roomCancel.do")
+    public String cancelRoom(@RequestParam("r_index") String r_index, Model model) {
+
+        RoomDAO dao = RoomDAO.getInstance();
+        boolean result = dao.deleteRoom(r_index);
+        if (result) {
+            System.out.println("삭제 성공");
+        }
+        return "redirect:/matchManage";
     }
 }

@@ -2494,6 +2494,27 @@ textarea.form-control-lg {
   border-width: 1px 0;
 }
 
+.form-floating input[id="u_pwCheck"] {
+  padding-right: 30px; /* 오른쪽 여백 추가 */
+}
+
+.form-floating::after {
+  content: attr(data-pw-match); /* 일치 여부 텍스트 표시 */
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  font-weight: bold;
+}
+
+.form-floating[data-pw-match="O"]::after {
+  color: green;
+}
+
+.form-floating[data-pw-match="X"]::after {
+  color: red;
+}
+
 .input-group {
   position: relative;
   display: flex;

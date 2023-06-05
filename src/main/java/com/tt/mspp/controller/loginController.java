@@ -35,7 +35,8 @@ public class loginController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("sessionid");
-        return "index";
+        session.removeAttribute("isLogged");
+        return "redirect:/";
     }
 
     @GetMapping("/kakaoLogin")
@@ -69,7 +70,7 @@ public class loginController {
         if (check) {//check가 ture면 로그인 성공
             session.setAttribute("sessionid", userdto.getU_id());
             System.out.print((String) session.getAttribute("sessionid"));
-            return "index";
+            return "redirect:/";
         } else                    //check가 false면 로그인 실패
             return "/login/loginFail";
     }
