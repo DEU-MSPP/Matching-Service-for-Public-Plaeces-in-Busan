@@ -33,19 +33,3 @@
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    // 드롭다운 메뉴 자동 열림 기능 추가
-    $(document).ready(function () {
-        $('.dropdown').hover(
-                function () {
-                    $(this).addClass('show');
-                    $(this).find('.dropdown-menu').addClass('show');
-                },
-                function () {
-                    $(this).removeClass('show');
-                    $(this).find('.dropdown-menu').removeClass('show');
-                }
-        );
-    });
-</script>
