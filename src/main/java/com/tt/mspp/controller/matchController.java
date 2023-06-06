@@ -1,17 +1,11 @@
 package com.tt.mspp.controller;
 
-import com.tt.mspp.dao.DAO;
-import com.tt.mspp.dao.FriendDAO;
-import com.tt.mspp.dao.MatchDAO;
-import com.tt.mspp.dao.RoomDAO;
-import com.tt.mspp.dto.FriendDTO;
-import com.tt.mspp.dto.RoomDTO;
-import com.tt.mspp.dto.MatchDTO;
+import com.tt.mspp.dao.*;
+import com.tt.mspp.dto.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
-import com.tt.mspp.dto.PlaceDTO;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -174,5 +168,37 @@ public class matchController {
             System.out.println("삭제 성공");
         }
         return "redirect:/matchManage";
+    }
+
+
+    @PostMapping("/matchComment")
+    public String matchComment(@RequestParam("r_index") String r_index, Model model) {
+
+        CommentDAO dao = CommentDAO.getInstance();
+        List<CommentDTO> commentList = dao.getCommentList(r_index);
+
+        model.addAttribute("c_r_index1", r_index);
+        model.addAttribute("commentList", commentList);
+        return "matchComment";
+    }
+
+    @PostMapping("/commentDelete.do")
+    public String deleteComment(@RequestParam("c_index") String c_index, HttpSession session, Model model) {
+        String id = (String) session.getAttribute("sessionid");
+
+        System.out.println("같음");
+        CommentDAO dao = CommentDAO.getInstance();
+        boolean result = dao.deleteComment(c_index);
+        return "redirect:/match";
+    }
+
+    @PostMapping("/commentInsert.do")
+    public String insertCommnet(@RequestParam("c_r_index") String c_r_index, @RequestParam("c_context") String c_context, HttpSession session) {
+        System.out.println(c_r_index);
+        String id = (String) session.getAttribute("sessionid");
+
+        CommentDAO dao = CommentDAO.getInstance();
+        boolean result = dao.insertComment(c_r_index, id, c_context);
+        return "redirect:/match";
     }
 }

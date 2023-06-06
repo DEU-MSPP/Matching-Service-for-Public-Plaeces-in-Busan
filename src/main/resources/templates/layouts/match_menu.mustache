@@ -11,14 +11,15 @@
         <table id="matchTable" style="width: 100%; height: 100%; table-layout: fixed; text-align: center; ">
             <thead>
             <tr>
-                <th style="width:5%;">번호</th>
-                <th style="width:17%;">등록자</th>
-                <th style="width:26%;">장소</th>
-                <th style="width:14%;">날짜</th>
-                <th style="width:14%;">시간</th>
+                <th style="width:4%;">번호</th>
+                <th style="width:16%;">등록자</th>
+                <th style="width:25%;">장소</th>
+                <th style="width:13%;">날짜</th>
+                <th style="width:13%;">시간</th>
                 <th style="width:8%;">모집인원</th>
-                <th style="width:8%;">설명</th>
-                <th style="width:8%;">신청</th>
+                <th style="width:7%;">설명</th>
+                <th style="width:7%;">대화</th>
+                <th style="width:7%;">신청</th>
             </tr>
             </thead>
             <tbody>
@@ -32,6 +33,12 @@
                     <td>{{count}}/{{r_max}}</td>
                     <td>
                         <button class="tooltip-btn" data-tooltip="{{r_discribe}}">상세</button>
+                    </td>
+                    <td>
+                        <form action="matchComment" method="post">
+                            <input type="hidden" id="r_index" name="r_index" value="{{r_index}}">
+                            <input class="tooltip-btn" type="submit" value="입장">
+                        </form>
                     </td>
                     <td>
                         <form action="match.do" method="post">
@@ -56,14 +63,15 @@
         <table id="friendMatchTable" style="width: 100%; height: 100%; table-layout: fixed; text-align: center; ">
             <thead>
             <tr>
-                <th style="width:5%;">번호</th>
-                <th style="width:17%;">등록자</th>
-                <th style="width:26%;">장소</th>
-                <th style="width:14%;">날짜</th>
-                <th style="width:14%;">시간</th>
+                <th style="width:4%;">번호</th>
+                <th style="width:16%;">등록자</th>
+                <th style="width:25%;">장소</th>
+                <th style="width:13%;">날짜</th>
+                <th style="width:13%;">시간</th>
                 <th style="width:8%;">모집인원</th>
-                <th style="width:8%;">설명</th>
-                <th style="width:8%;">신청</th>
+                <th style="width:7%;">설명</th>
+                <th style="width:7%;">대화</th>
+                <th style="width:7%;">신청</th>
             </tr>
             </thead>
             <tbody>
@@ -77,6 +85,12 @@
                     <td>{{count}}/{{r_max}}</td>
                     <td>
                         <button class="tooltip-btn" data-tooltip="{{r_discribe}}">상세</button>
+                    </td>
+                    <td>
+                        <form action="matchComment" method="post">
+                            <input type="hidden" id="r_index" name="r_index" value="{{r_index}}">
+                            <input class="tooltip-btn" type="submit" value="입장">
+                        </form>
                     </td>
                     <td>
                         <form action="match.do" method="post">
@@ -95,7 +109,7 @@
 
 <script>
     var currentPage = 1;
-    var rowsPerPage = 2;
+    var rowsPerPage = 5;
 
     var currentPage2 = 1;
 

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+       <head>
+           <meta charset="utf-8"/>
+           <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+           <meta name="description" content=""/>
+           <meta name="author" content=""/>
+           <title>메인페이지</title>
+       </head>
+
+<body>
+{{>layouts/header}}
+
+{{#alertMessage}}
+    <script>alert("{{alertMessage}}");</script>
+{{/alertMessage}}
+
+<!-- Page header with logo and tagline-->
+<header class="py-5 bg-light border-bottom mb-4">
+    <div class="container">
+        <div class="text-center my-0">
+            <h1 class="fw-bolder">매칭 코멘트</h1>
+            <p class="lead mb-0">매칭 상세 정보 공유</p>
+        </div>
+    </div>
+</header>
+
+<div class="container" style="width:80%;">
+    <div class="row">
+
+        <div class="card mb-6">
+            <div class="card-body">
+                <table id="matchTable" style="width: 100%; height: 100%; table-layout: fixed; text-align: center;">
+                    <thead>
+                    <tr>
+                        <th style="width:20%;">작성자</th>
+                        <th style="width:60%;">내용</th>
+                        <th style="width:20%;">날짜</th>
+                        <th style="width:20%;">삭제</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#commentList}}
+                        <tr>
+                            <td><{{c_id}}></td>
+                            <td><{{c_context}}></td>
+                            <td><{{c_date}}></td>
+                            <td>
+                                <form action="commentDelete.do" method="POST">
+                                    <input type="hidden" id="c_index" name="c_index" value="{{c_index}}">
+                                    <input type="hidden" id="c_id" name="c_id" value="{{c_id}}">
+                                    <input class="tooltip-btn" type="submit" value="삭제" onclick="confirmApplication()">
+                                </form>
+                            </td>
+                        </tr>
+                    {{/commentList}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <form action="commentInsert.do" method="post">
+                    <input type="hidden" id="c_r_index" name="c_r_index" value="{{c_r_index1}}">
+                    <input type="text" id="context" name="c_context" style="width:90%; height: 60px; " required/>
+                    <input class="tooltip-btn" type="submit" value="입력"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{>layouts/footer}}
+</body>
+</html>
+
+<script>
+    function confirmApplication() {
+        if (confirm("정말 삭제하시겠습니까?")) {
+            document.getElementById("application-form").submit();
+        }
+    }
+</script>

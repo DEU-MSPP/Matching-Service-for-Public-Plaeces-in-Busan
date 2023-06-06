@@ -58,7 +58,7 @@ public class loginController {
         } else if (num == 1) {       //1번째 기존 정보 있어서 바로 로그인 및 세션 유지
             session.setAttribute("sessionid", userdto.getU_id());
         }
-        return "index";
+        return "redirect:/";
     }
 
     //로그인 버튼
