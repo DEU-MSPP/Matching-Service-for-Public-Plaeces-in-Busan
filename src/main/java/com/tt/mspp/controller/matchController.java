@@ -140,7 +140,11 @@ public class matchController {
     public String room(Model model) {
         DAO dao = DAO.getInstance();
         List<PlaceDTO> placelist = dao.getPlaceListType("1");
+        List<PlaceDTO> placelist2 = dao.getPlaceListType("3");
+        List<PlaceDTO> placelist3 = dao.getPlaceListType("4");
         model.addAttribute("placelist", placelist); //지도에 표시할 마커
+        model.addAttribute("placelist2", placelist2); //지도에 표시할 마커
+        model.addAttribute("placelist3", placelist3); //지도에 표시할 마커
         return "room";
     }
 

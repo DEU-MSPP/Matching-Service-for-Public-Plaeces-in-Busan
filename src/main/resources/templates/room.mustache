@@ -44,6 +44,14 @@
                         addMarker(map, '{{p_name}}', '{{p_address}}', '{{p_index}}');
                         {{/placelist}}
 
+                        {{#placelist2}}
+                        addMarker(map, '{{p_name}}', '{{p_address}}', '{{p_index}}');
+                        {{/placelist2}}
+
+                        {{#placelist3}}
+                        addMarker(map, '{{p_name}}', '{{p_address}}', '{{p_index}}');
+                        {{/placelist3}}
+
                     function geocodeToLatLng(address, callback) {
                         var geocoder = new kakao.maps.services.Geocoder();
                         geocoder.addressSearch(address, function(result, status) {
@@ -109,6 +117,18 @@
                                 addMarker(map, '{{p_name}}', '{{p_address}}', '{{p_index}}');
                             }
                         {{/placelist}}
+                        {{#placelist2}}
+                            str1 = "{{p_name}}";
+                            if(str1.indexOf(input) != -1){
+                                addMarker(map, '{{p_name}}', '{{p_address}}', '{{p_index}}');
+                            }
+                        {{/placelist2}}
+                        {{#placelist3}}
+                            str1 = "{{p_name}}";
+                            if(str1.indexOf(input) != -1){
+                                addMarker(map, '{{p_name}}', '{{p_address}}', '{{p_index}}');
+                            }
+                        {{/placelist3}}
                     }
 
                     function reset(){
